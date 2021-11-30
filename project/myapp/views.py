@@ -6,6 +6,8 @@ from rest_framework.views import APIView
 from .serializers import RegistrationSerializer
 
 
+
+
 class RegistrationAPIView(APIView):
 
     permission_classes = (AllowAny,)
