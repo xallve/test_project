@@ -1,6 +1,6 @@
 # test_project
 
-usage:
+Usage:
 
 - POST localhost:8000/api/users/ for registration; provide JSON, example: 
 ```JSON
