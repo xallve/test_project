@@ -85,6 +85,8 @@ class Post(models.Model):
     title = models.CharField(max_length=100, blank=True, default='')
     body = models.TextField(blank=True, default='')
     owner = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)
+    likes = models.PositiveIntegerField(default=0)
+    dislikes = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ['created']

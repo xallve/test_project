@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 
-from .models import User
+from .models import User, Post
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -60,3 +60,43 @@ class LoginSerializer(serializers.Serializer):
             'username': user.username,
             'token': user.token
         }
+
+
+class PostSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+
+    class Meta:
+        model = Post
+        fields = ['id', 'title', 'body', 'owner', 'likes', 'dislikes']
+
+        read_only_fields = ('likes', 'dislikes',)
+
+
+class UserSerializer(serializers.ModelSerializer):
+    posts = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
+    password = serializers.CharField(
+        max_length=128,
+        min_length=8,
+        write_only=True
+    )
+
+    class Meta:
+        model = User
+        fields = ['email', 'username', 'password', 'token', 'posts']
+
+        read_only_fields = ('token',)
+
+    def update(self, instance, validated_data):
+
+        password = validated_data.pop('password', None)
+
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+
+        if password is None:
+            instance.set_password(password)
+
+        instance.save()
+
+        return instance

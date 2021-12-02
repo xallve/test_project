@@ -39,7 +39,7 @@ class JWTAuthentication(authentication.BaseAuthentication):
         try:
             payload = jwt.decode(token, settings.SECRET_KEY)
         except Exception:
-            msg = 'Error: cannot decode the token.'
+            msg = 'Erroor: cannot decode the token.'
             raise exceptions.AuthenticationFailed(msg)
 
         try:
@@ -52,4 +52,4 @@ class JWTAuthentication(authentication.BaseAuthentication):
             msg = 'user is deactivated'
             raise exceptions.AuthenticationFailed(msg)
 
-        return (user, token,)
+        return (user, token)
