@@ -70,7 +70,7 @@ class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
 class PostList(ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-#    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -79,4 +79,4 @@ class PostList(ListCreateAPIView):
 class PostDetail(RetrieveUpdateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-#    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
